@@ -19,13 +19,16 @@ def crop_image(filename, top, bottom):
     # Salva a imagem cortada, substituindo a original
     cropped_img.save(filename)
 
-def latex_to_png(nagata_a, nagata_b, nagata_f, nagata_alfa, nagata_p, filename):
+def latex_to_png(C_opt, C_std, n_opt, n_std, m_opt, m_std, filename):
     # Configura o matplotlib para usar sua própria renderização de LaTeX
     plt.rc('text', usetex=False)
     plt.rc('font', family='serif')
 
     # Formata a equação com os valores de A_value e B_value
-    equation = rf"$N_{{p}} = \frac{{{nagata_a}}}{{Re}} + {nagata_b}*\left( \frac{{10^3 + 0.6 * {nagata_f} * Re^{{{nagata_alfa}}}}}{{10^3 + 1.6 * {nagata_f} * Re^{{{nagata_alfa}}}}} \right)^{{{nagata_p}}}$"
+    #equation = rf"$Nu = {C_opt:.2f} \pm{C_std:.2f} * Re^{n_opt} * Pr^{m_opt}$"
+    #equation = rf"$Nu = {C_opt:.2f} \pm {C_std:.2f} \cdot Re^{{\frac{{{n_opt.numerator}}}{{{n_opt.denominator}}}}} \cdot Pr^{{\frac{{{m_opt.numerator}}}{{{m_opt.denominator}}}}}$"
+
+    equation = rf"$Nu = {C_opt:.2f} \pm {C_std:.2f} \cdot Re^{{({n_opt.numerator}/{n_opt.denominator} \pm {n_std:.2f})}} \cdot Pr^{{({m_opt.numerator}/{m_opt.denominator} \pm {m_std:.2f})}}$"
 
     dpi = 300
     width_in = 500 / dpi
